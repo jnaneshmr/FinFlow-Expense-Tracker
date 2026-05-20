@@ -1,0 +1,91 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            Int            @id @default(autoincrement())
+  name          String
+  email         String         @unique
+  password      String
+  avatar        String?
+  currency      String         @default("USD")
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  transactions  Transaction[]
+  subscriptions Subscription[]
+  budgets       Budget[]
+  notifications Notification[]
+}
+
+model Transaction {
+  id        Int      @id @default(autoincrement())
+  title     String
+  amount    Float
+  type      String   // "income" | "expense"
+  category  String
+  date      DateTime
+  method    String
+  notes     String?
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([date])
+  @@index([type])
+}
+
+model Subscription {
+  id          Int      @id @default(autoincrement())
+  name        String
+  category    String
+  amount      Float
+  cycle       String   // "weekly" | "monthly" | "yearly"
+  startDate   DateTime
+  nextRenewal DateTime?
+  method      String
+  status      String   @default("active") // "active" | "paused" | "cancelled"
+  notes       String?
+  userId      Int
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([userId])
+  @@index([status])
+}
+
+model Budget {
+  id        Int      @id @default(autoincrement())
+  category  String
+  limit     Float
+  month     String   // "YYYY-MM"
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, category, month])
+  @@index([userId])
+}
+
+model Notification {
+  id        Int      @id @default(autoincrement())
+  title     String
+  message   String
+  type      String   // "renewal" | "budget" | "info"
+  isRead    Boolean  @default(false)
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+}
