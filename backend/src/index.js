@@ -18,6 +18,7 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(helmet());
+app.set('trust proxy', 1);
 
 const allowedOrigins = [
   'http://localhost:5173', 
@@ -25,16 +26,8 @@ const allowedOrigins = [
 ];
 
 app.use(cors({ 
-  origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps or curl requests)
-    // Allow localhost, the specific FRONTEND_URL, and ANY vercel.app domain
-    if (!origin || allowedOrigins.includes(origin) || origin.endsWith('.vercel.app')) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  }, 
-  credentials: true 
+  origin: '*',
+  credentials: false 
 }));
 app.use(rateLimit({ windowMs: 15 * 60 * 1000, max: 200, message: { error: 'Too many requests, slow down.' } }));
 app.use(express.json());
