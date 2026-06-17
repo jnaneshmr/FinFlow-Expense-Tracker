@@ -3,10 +3,12 @@ import { createContext, useContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { api } from '../services/api';
 import toast from 'react-hot-toast';
+import { useQueryClient } from 'react-query';
 
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
+  const queryClient = useQueryClient();
   const [user, setUser] = useState(() => {
     try { return JSON.parse(localStorage.getItem('ff_user')); } catch { return null; }
   });
@@ -68,6 +70,7 @@ export function AuthProvider({ children }) {
     setUser(null);
     setToken(null);
     localStorage.removeItem('ff_user');
+    queryClient.clear();
     toast.success('Logged out successfully');
   };
 
