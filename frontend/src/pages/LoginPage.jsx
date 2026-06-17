@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Eye, EyeOff, Mail, Lock } from 'lucide-react';
+import { Eye, EyeOff, Mail, Lock, ArrowLeft } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 export default function LoginPage() {
@@ -22,63 +22,65 @@ export default function LoginPage() {
   };
 
   return (
-    <div style={{ minHeight: '100vh', background: 'var(--color-bg)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24, position: 'relative', overflow: 'hidden' }}>
-      {/* Background glow */}
-      <div style={{ position: 'fixed', top: -200, right: -100, width: 600, height: 600, background: 'radial-gradient(circle, rgba(108,99,255,0.08) 0%, transparent 70%)', pointerEvents: 'none' }} />
-      <div style={{ position: 'fixed', bottom: -200, left: -100, width: 500, height: 500, background: 'radial-gradient(circle, rgba(181,123,238,0.06) 0%, transparent 70%)', pointerEvents: 'none' }} />
+    <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24, position: 'relative', overflow: 'hidden' }}>
+      
+      {/* Ambient Backgrounds */}
+      <div className="ambient-glow glow-1" />
+      <div className="ambient-glow glow-2" />
 
-      <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}
-        style={{ width: '100%', maxWidth: 440, background: 'var(--color-surface)', border: '1px solid var(--color-border)', borderRadius: 24, padding: 40 }}>
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+        className="glass-panel"
+        style={{ width: '100%', maxWidth: 440, borderRadius: 24, padding: 48, position: 'relative', zIndex: 10 }}>
 
-        {/* Logo */}
-        <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none', marginBottom: 32 }}>
-          <div style={{ width: 36, height: 36, background: 'linear-gradient(135deg, #6c63ff, #b57bee)', borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'Syne, sans-serif', fontWeight: 800, color: 'white', fontSize: 14 }}>FF</div>
-          <span style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 20, background: 'linear-gradient(135deg, #8b85ff, #b57bee)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>FinFlow</span>
+        <Link to="/" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, textDecoration: 'none', color: 'var(--color-muted)', fontSize: 13, fontWeight: 500, marginBottom: 40, transition: 'color 0.2s' }} onMouseEnter={e => e.currentTarget.style.color = 'var(--color-text)'} onMouseLeave={e => e.currentTarget.style.color = 'var(--color-muted)'}>
+          <ArrowLeft size={14} /> Back to home
         </Link>
 
-        <h1 style={{ fontFamily: 'Syne, sans-serif', fontSize: 26, fontWeight: 800, color: 'var(--color-text)', marginBottom: 6 }}>Welcome back</h1>
-        <p style={{ fontSize: 14, color: 'var(--color-muted)', marginBottom: 28 }}>Sign in to your FinFlow account</p>
+        <h1 style={{ fontSize: 28, fontWeight: 700, color: 'var(--color-text)', marginBottom: 8, letterSpacing: '-0.02em' }}>Log in</h1>
+        <p style={{ fontSize: 15, color: 'var(--color-muted)', marginBottom: 32, fontWeight: 400 }}>Enter your details to access your account.</p>
 
         {error && (
-          <div style={{ padding: '10px 14px', borderRadius: 10, background: 'var(--color-red-bg)', border: '1px solid rgba(255,95,126,0.25)', color: 'var(--color-red)', fontSize: 13, marginBottom: 20 }}>
+          <div style={{ padding: '12px 16px', borderRadius: 12, background: 'var(--color-red-bg)', color: 'var(--color-red)', fontSize: 14, marginBottom: 24, border: '1px solid rgba(248, 113, 113, 0.2)' }}>
             {error}
           </div>
         )}
 
-        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-            <label style={{ fontSize: 12, fontWeight: 600, color: 'var(--color-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Email Address</label>
+        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+            <label style={{ fontSize: 13, fontWeight: 500, color: 'var(--color-text)' }}>Email</label>
             <div style={{ position: 'relative' }}>
-              <Mail size={15} style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', color: 'var(--color-hint)' }} />
+              <Mail size={16} style={{ position: 'absolute', left: 16, top: '50%', transform: 'translateY(-50%)', color: 'var(--color-muted)' }} />
               <input type="email" value={form.email} onChange={set('email')} placeholder="you@example.com"
-                style={{ width: '100%', padding: '10px 12px 10px 36px', background: 'var(--color-surface2)', border: '1px solid var(--color-border2)', borderRadius: 10, fontSize: 14, color: 'var(--color-text)', outline: 'none', fontFamily: 'DM Sans, sans-serif' }} />
+                style={{ width: '100%', padding: '14px 16px 14px 44px', background: 'var(--color-surface2)', border: '1px solid var(--color-border)', borderRadius: 12, fontSize: 15, color: 'var(--color-text)', outline: 'none', transition: 'border-color 0.2s', fontWeight: 400 }} 
+                onFocus={e => e.target.style.borderColor = 'var(--color-text)'} onBlur={e => e.target.style.borderColor = 'var(--color-border)'} />
             </div>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-            <label style={{ fontSize: 12, fontWeight: 600, color: 'var(--color-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Password</label>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+            <label style={{ fontSize: 13, fontWeight: 500, color: 'var(--color-text)' }}>Password</label>
             <div style={{ position: 'relative' }}>
-              <Lock size={15} style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', color: 'var(--color-hint)' }} />
+              <Lock size={16} style={{ position: 'absolute', left: 16, top: '50%', transform: 'translateY(-50%)', color: 'var(--color-muted)' }} />
               <input type={showPw ? 'text' : 'password'} value={form.password} onChange={set('password')} placeholder="••••••••"
-                style={{ width: '100%', padding: '10px 40px 10px 36px', background: 'var(--color-surface2)', border: '1px solid var(--color-border2)', borderRadius: 10, fontSize: 14, color: 'var(--color-text)', outline: 'none', fontFamily: 'DM Sans, sans-serif' }} />
+                style={{ width: '100%', padding: '14px 44px 14px 44px', background: 'var(--color-surface2)', border: '1px solid var(--color-border)', borderRadius: 12, fontSize: 15, color: 'var(--color-text)', outline: 'none', transition: 'border-color 0.2s', fontWeight: 400 }}
+                onFocus={e => e.target.style.borderColor = 'var(--color-text)'} onBlur={e => e.target.style.borderColor = 'var(--color-border)'} />
               <button type="button" onClick={() => setShowPw(v => !v)}
-                style={{ position: 'absolute', right: 12, top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-hint)', display: 'flex' }}>
-                {showPw ? <EyeOff size={15} /> : <Eye size={15} />}
+                style={{ position: 'absolute', right: 16, top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-muted)', display: 'flex' }}>
+                {showPw ? <EyeOff size={16} /> : <Eye size={16} />}
               </button>
             </div>
           </div>
 
           <button type="submit" disabled={loading}
-            style={{ width: '100%', padding: 12, background: '#6c63ff', border: 'none', borderRadius: 10, fontSize: 15, fontWeight: 700, color: 'white', cursor: loading ? 'not-allowed' : 'pointer', opacity: loading ? 0.7 : 1, fontFamily: 'DM Sans, sans-serif', marginTop: 4 }}>
-            {loading ? 'Signing in...' : 'Sign In'}
+            style={{ width: '100%', padding: 14, background: 'var(--color-text)', border: 'none', borderRadius: 12, fontSize: 15, fontWeight: 600, color: 'var(--color-bg)', cursor: loading ? 'not-allowed' : 'pointer', opacity: loading ? 0.7 : 1, marginTop: 8, transition: 'transform 0.2s' }}
+            onMouseEnter={e => !loading && (e.currentTarget.style.transform = 'scale(1.02)')} onMouseLeave={e => !loading && (e.currentTarget.style.transform = 'scale(1)')}>
+            {loading ? 'Logging in...' : 'Log in'}
           </button>
         </form>
 
-
-        <p style={{ marginTop: 20, textAlign: 'center', fontSize: 14, color: 'var(--color-muted)' }}>
-          No account?{' '}
-          <Link to="/register" style={{ color: 'var(--color-accent2)', fontWeight: 600, textDecoration: 'none' }}>Create one →</Link>
-        </p>
+        <div style={{ marginTop: 32, textAlign: 'center', fontSize: 14, color: 'var(--color-muted)' }}>
+          Don't have an account?{' '}
+          <Link to="/register" style={{ color: 'var(--color-text)', fontWeight: 500, textDecoration: 'none' }}>Sign up</Link>
+        </div>
       </motion.div>
     </div>
   );

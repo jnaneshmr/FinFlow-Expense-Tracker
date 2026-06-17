@@ -109,7 +109,7 @@ export default function BudgetsPage() {
           { label: 'Remaining',      value: fmt(totalBudgeted - totalSpent), color: 'var(--color-green)', icon: '💚' },
           { label: 'Over Budget',    value: `${overCount} categories`, color: overCount > 0 ? 'var(--color-red)' : 'var(--color-green)', icon: overCount > 0 ? '⚠️' : '✅' },
         ].map(s => (
-          <div key={s.label} style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)', borderRadius: 12, padding: '14px 16px' }}>
+          <div key={s.label} className="glass-panel" style={{ borderRadius: 16, padding: '16px 20px' }}>
             <div style={{ fontSize: 18, marginBottom: 6 }}>{s.icon}</div>
             <div style={{ fontSize: 11, color: 'var(--color-hint)', fontWeight: 600, marginBottom: 4 }}>{s.label}</div>
             <div style={{ fontFamily: 'Syne, sans-serif', fontSize: 18, fontWeight: 700, color: s.color }}>{s.value}</div>
@@ -127,7 +127,7 @@ export default function BudgetsPage() {
 
       {/* Budget cards */}
       {enriched.length === 0 ? (
-        <div style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)', borderRadius: 16 }}>
+        <div className="glass-panel" style={{ borderRadius: 24 }}>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '48px 24px', gap: 12, textAlign: 'center' }}>
             <div style={{ fontSize: 40 }}>🎯</div>
             <div style={{ fontSize: 16, fontWeight: 600 }}>No budgets yet</div>
@@ -141,7 +141,8 @@ export default function BudgetsPage() {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))', gap: 20 }}>
           {enriched.map((b, i) => (
             <motion.div key={b.id} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}
-              style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)', borderRadius: 16, padding: 20 }}>
+              className="glass-panel"
+              style={{ borderRadius: 24, padding: 24 }}>
               {b.over && (
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '8px 12px', borderRadius: 8, background: 'var(--color-red-bg)', border: '1px solid rgba(255,95,126,0.2)', marginBottom: 14, fontSize: 12, color: 'var(--color-red)', fontWeight: 600 }}>
                   <AlertTriangle size={13} />

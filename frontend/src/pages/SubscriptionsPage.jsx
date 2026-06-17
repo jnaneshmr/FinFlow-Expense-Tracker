@@ -165,7 +165,7 @@ export default function SubscriptionsPage() {
           { label: 'Active',         value: activeSubs.length,                  color: '#22d3a5', icon: '✅' },
           { label: 'Paused',         value: subs.filter(s=>s.status==='paused').length, color: '#f5a623', icon: '⏸️' },
         ].map(s => (
-          <div key={s.label} style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)', borderRadius: 12, padding: '14px 16px' }}>
+          <div key={s.label} className="glass-panel" style={{ borderRadius: 16, padding: '16px 20px' }}>
             <div style={{ fontSize: 18, marginBottom: 6 }}>{s.icon}</div>
             <div style={{ fontSize: 11, color: 'var(--color-hint)', fontWeight: 600, marginBottom: 4 }}>{s.label}</div>
             <div style={{ fontFamily: 'Syne, sans-serif', fontSize: 20, fontWeight: 700, color: s.color }}>{s.value}</div>
@@ -191,7 +191,8 @@ export default function SubscriptionsPage() {
 
       {/* Table */}
       <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
-        style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)', borderRadius: 16, overflow: 'hidden' }}>
+        className="glass-panel"
+        style={{ borderRadius: 24, overflow: 'hidden' }}>
         {filtered.length === 0 ? (
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '48px 24px', gap: 12, textAlign: 'center' }}>
             <div style={{ width: 56, height: 56, borderRadius: 16, background: 'var(--color-surface2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>

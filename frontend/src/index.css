@@ -1,57 +1,62 @@
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap');
-@tailwind base;
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&display=swap');
 @tailwind components;
 @tailwind utilities;
 
-/* ── Theme variables ─────────────────────────────── */
+/* ── Premium Glassmorphism Variables ─────────────────────────────── */
 :root {
-  --color-bg:         #0d0f14;
-  --color-surface:    #13161d;
-  --color-surface2:   #1a1e28;
-  --color-surface3:   #222736;
-  --color-border:     rgba(255,255,255,0.07);
-  --color-border2:    rgba(255,255,255,0.12);
-  --color-text:       #f0f2f8;
-  --color-muted:      #8b90a8;
-  --color-hint:       #5c6080;
-  --color-accent:     #6c63ff;
-  --color-accent2:    #8b85ff;
-  --color-accent-bg:  rgba(108,99,255,0.12);
-  --color-green:      #22d3a5;
-  --color-green-bg:   rgba(34,211,165,0.1);
-  --color-red:        #ff5f7e;
-  --color-red-bg:     rgba(255,95,126,0.1);
-  --color-amber:      #f5a623;
-  --color-amber-bg:   rgba(245,166,35,0.1);
-  --color-blue:       #38b6ff;
-  --color-blue-bg:    rgba(56,182,255,0.1);
-  --color-purple:     #b57bee;
-  --color-purple-bg:  rgba(181,123,238,0.1);
+  /* Default is Deep Dark Mode */
+  --color-bg:         #050505;
+  
+  /* Glass colors - mostly transparent whites */
+  --color-surface:    rgba(255, 255, 255, 0.02);
+  --color-surface2:   rgba(255, 255, 255, 0.04);
+  --color-surface3:   rgba(255, 255, 255, 0.08);
+  
+  --color-border:     rgba(255, 255, 255, 0.08);
+  --color-border2:    rgba(255, 255, 255, 0.12);
+  
+  --color-text:       #ffffff;
+  --color-muted:      #a1a1aa;
+  --color-hint:       #52525b;
+  
+  --color-accent:     #ffffff;  
+  --color-accent2:    #d4d4d8;
+  --color-accent-bg:  rgba(255, 255, 255, 0.1); 
+
+  /* Status Colors */
+  --color-green:      #4ade80;
+  --color-green-bg:   rgba(74, 222, 128, 0.1);
+  --color-red:        #f87171;
+  --color-red-bg:     rgba(248, 113, 113, 0.1);
+  --color-amber:      #fbbf24;
+  --color-amber-bg:   rgba(251, 191, 36, 0.1);
+  --color-blue:       #60a5fa;
+  --color-blue-bg:    rgba(96, 165, 250, 0.1);
+  --color-purple:     #c084fc;
+  --color-purple-bg:  rgba(192, 132, 252, 0.1);
+  
+  /* Ambient Gradients */
+  --ambient-1: #3b0764; /* deep purple */
+  --ambient-2: #172554; /* deep blue */
 }
 
+/* Light Mode Override */
 .light {
-  --color-bg:         #f4f5fa;
+  --color-bg:         #fafafa;
   --color-surface:    #ffffff;
-  --color-surface2:   #eef0f7;
-  --color-surface3:   #e4e6f0;
-  --color-border:     rgba(0,0,0,0.07);
-  --color-border2:    rgba(0,0,0,0.12);
-  --color-text:       #0d0f14;
-  --color-muted:      #555b7a;
-  --color-hint:       #9198bc;
-  --color-accent:     #6c63ff;
-  --color-accent2:    #5048cc;
-  --color-accent-bg:  rgba(108,99,255,0.1);
-  --color-green:      #0fa87e;
-  --color-green-bg:   rgba(15,168,126,0.1);
-  --color-red:        #e53e5f;
-  --color-red-bg:     rgba(229,62,95,0.1);
-  --color-amber:      #d4880e;
-  --color-amber-bg:   rgba(212,136,14,0.1);
-  --color-blue:       #1a90e0;
-  --color-blue-bg:    rgba(26,144,224,0.1);
-  --color-purple:     #9955d4;
-  --color-purple-bg:  rgba(153,85,212,0.1);
+  --color-surface2:   #f4f4f5;
+  --color-surface3:   #e4e4e7;
+  --color-border:     rgba(0, 0, 0, 0.06);
+  --color-border2:    rgba(0, 0, 0, 0.12);
+  --color-text:       #09090b;
+  --color-muted:      #71717a;
+  --color-hint:       #a1a1aa;
+  --color-accent:     #09090b;  
+  --color-accent2:    #3f3f46;
+  --color-accent-bg:  rgba(0, 0, 0, 0.05); 
+  --ambient-1: #f3e8ff;
+  --ambient-2: #dbeafe;
 }
 
 /* ── Base ────────────────────────────────────────── */
@@ -60,11 +65,11 @@
 html { scroll-behavior: smooth; }
 
 body {
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
   background: var(--color-bg);
   color: var(--color-text);
   min-height: 100vh;
-  transition: background 0.3s, color 0.3s;
+  transition: background 0.4s ease, color 0.4s ease;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -76,16 +81,75 @@ body {
 /* ── Recharts custom styles ──────────────────────── */
 .recharts-tooltip-wrapper .recharts-default-tooltip {
   background: var(--color-surface) !important;
-  border: 1px solid var(--color-border2) !important;
-  border-radius: 10px !important;
-  font-family: 'DM Sans', sans-serif !important;
+  backdrop-filter: blur(20px) !important;
+  border: 1px solid var(--color-border) !important;
+  border-radius: 12px !important;
+  font-family: 'Outfit', sans-serif !important;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5) !important;
+}
+.light .recharts-tooltip-wrapper .recharts-default-tooltip {
+  box-shadow: 0 10px 40px rgba(0,0,0,0.08) !important;
 }
 
 /* ── Input / select resets ───────────────────────── */
 input[type='date']::-webkit-calendar-picker-indicator,
 input[type='month']::-webkit-calendar-picker-indicator {
-  filter: invert(0.6);
   cursor: pointer;
+  filter: invert(0.8);
+}
+.light input[type='date']::-webkit-calendar-picker-indicator,
+.light input[type='month']::-webkit-calendar-picker-indicator {
+  filter: invert(0);
+}
+
+/* ── Utility Classes ─────────────────────────────── */
+.glass-panel {
+  background: var(--color-surface);
+  backdrop-filter: blur(40px) saturate(150%);
+  -webkit-backdrop-filter: blur(40px) saturate(150%);
+  border: 1px solid var(--color-border);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.2),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.4s ease;
+}
+.light .glass-panel {
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.04),
+    inset 0 0 0 1px rgba(0, 0, 0, 0.02);
+}
+
+.glass-panel:hover {
+  border-color: var(--color-border2);
+  box-shadow: 
+    0 12px 48px rgba(0, 0, 0, 0.3),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+.light .glass-panel:hover {
+  box-shadow: 
+    0 12px 48px rgba(0, 0, 0, 0.08),
+    inset 0 0 0 1px rgba(0, 0, 0, 0.04);
+}
+
+/* ── Ambient Background Glows ────────────────────── */
+.ambient-glow {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(140px);
+  opacity: 0.5;
+  pointer-events: none;
+  z-index: -1;
+  animation: pulse-slow 10s infinite alternate;
+}
+
+.ambient-glow.glow-1 {
+  top: -10%; right: -5%; width: 50vw; height: 50vw;
+  background: var(--ambient-1);
+}
+
+.ambient-glow.glow-2 {
+  bottom: -10%; left: -5%; width: 60vw; height: 60vw;
+  background: var(--ambient-2);
 }
 
 /* ── Animations ──────────────────────────────────── */
@@ -97,23 +161,11 @@ input[type='month']::-webkit-calendar-picker-indicator {
   from { opacity: 0; }
   to   { opacity: 1; }
 }
-@keyframes pulse-soft {
-  0%, 100% { opacity: 1; }
-  50%       { opacity: 0.5; }
+@keyframes pulse-slow {
+  0% { transform: scale(1) translate(0, 0); opacity: 0.4; }
+  100% { transform: scale(1.1) translate(-20px, 20px); opacity: 0.6; }
 }
 
-.animate-slide-up  { animation: slideUp  0.2s ease; }
-.animate-fade-in   { animation: fadeIn   0.15s ease; }
-.animate-pulse-soft { animation: pulse-soft 2s infinite; }
+.animate-slide-up  { animation: slideUp  0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; }
+.animate-fade-in   { animation: fadeIn   0.4s ease forwards; opacity: 0; }
 
-/* ── Skeleton ────────────────────────────────────── */
-.skeleton {
-  background: linear-gradient(90deg, var(--color-surface2) 25%, var(--color-surface3) 50%, var(--color-surface2) 75%);
-  background-size: 200% 100%;
-  animation: shimmer 1.5s infinite;
-  border-radius: 8px;
-}
-@keyframes shimmer {
-  from { background-position: 200% 0; }
-  to   { background-position: -200% 0; }
-}

@@ -73,7 +73,7 @@ export default function AnalyticsPage() {
           { label: 'Avg Savings Rate',     value: `${savingsRate}%`, color: '#22d3a5', icon: '💹' },
         ].map((k, i) => (
           <motion.div key={k.label} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.08 }}
-            style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)', borderRadius: 12, padding: '14px 16px' }}>
+            className="glass-panel" style={{ borderRadius: 16, padding: '16px 20px' }}>
             <div style={{ fontSize: 20, marginBottom: 8 }}>{k.icon}</div>
             <div style={{ fontSize: 11, color: 'var(--color-hint)', fontWeight: 600, marginBottom: 4 }}>{k.label}</div>
             <div style={{ fontFamily: 'Syne, sans-serif', fontSize: 20, fontWeight: 700, color: k.color }}>{k.value}</div>
@@ -90,7 +90,7 @@ export default function AnalyticsPage() {
       {tab === 0 && (
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
-            style={{ gridColumn: '1 / -1', background: 'var(--color-surface)', border: '1px solid var(--color-border)', borderRadius: 16, padding: 24 }}>
+            className="glass-panel" style={{ gridColumn: '1 / -1', borderRadius: 24, padding: 24 }}>
             <h2 style={{ fontFamily: 'Syne, sans-serif', fontSize: 16, fontWeight: 700, marginBottom: 4 }}>Monthly Cash Flow</h2>
             <p style={{ fontSize: 13, color: 'var(--color-muted)', marginBottom: 20 }}>Income vs expenses over 7 months</p>
             <ResponsiveContainer width="100%" height={300}>
@@ -107,7 +107,7 @@ export default function AnalyticsPage() {
           </motion.div>
 
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-            style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)', borderRadius: 16, padding: 24 }}>
+            className="glass-panel" style={{ borderRadius: 24, padding: 24 }}>
             <h2 style={{ fontFamily: 'Syne, sans-serif', fontSize: 16, fontWeight: 700, marginBottom: 4 }}>Monthly Savings</h2>
             <p style={{ fontSize: 13, color: 'var(--color-muted)', marginBottom: 20 }}>How much saved each month</p>
             <ResponsiveContainer width="100%" height={220}>
@@ -128,7 +128,7 @@ export default function AnalyticsPage() {
           </motion.div>
 
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}
-            style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)', borderRadius: 16, padding: 24 }}>
+            className="glass-panel" style={{ borderRadius: 24, padding: 24 }}>
             <h2 style={{ fontFamily: 'Syne, sans-serif', fontSize: 16, fontWeight: 700, marginBottom: 4 }}>Income Trend</h2>
             <p style={{ fontSize: 13, color: 'var(--color-muted)', marginBottom: 20 }}>Monthly income growth</p>
             <ResponsiveContainer width="100%" height={220}>
@@ -148,7 +148,7 @@ export default function AnalyticsPage() {
       {tab === 1 && (
         <div style={{ display: 'grid', gridTemplateColumns: '3fr 2fr', gap: 20 }}>
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
-            style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)', borderRadius: 16, padding: 24 }}>
+            className="glass-panel" style={{ borderRadius: 24, padding: 24 }}>
             <h2 style={{ fontFamily: 'Syne, sans-serif', fontSize: 16, fontWeight: 700, marginBottom: 4 }}>Expenses by Category</h2>
             <p style={{ fontSize: 13, color: 'var(--color-muted)', marginBottom: 20 }}>All-time totals</p>
             <ResponsiveContainer width="100%" height={360}>
@@ -165,7 +165,7 @@ export default function AnalyticsPage() {
           </motion.div>
 
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-            style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)', borderRadius: 16, padding: 24 }}>
+            className="glass-panel" style={{ borderRadius: 24, padding: 24 }}>
             <h2 style={{ fontFamily: 'Syne, sans-serif', fontSize: 16, fontWeight: 700, marginBottom: 4 }}>Distribution</h2>
             <p style={{ fontSize: 13, color: 'var(--color-muted)', marginBottom: 16 }}>Share of total spending</p>
             <ResponsiveContainer width="100%" height={220}>
@@ -193,7 +193,7 @@ export default function AnalyticsPage() {
       {tab === 2 && (
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
-            style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)', borderRadius: 16, padding: 24 }}>
+            className="glass-panel" style={{ borderRadius: 24, padding: 24 }}>
             <h2 style={{ fontFamily: 'Syne, sans-serif', fontSize: 16, fontWeight: 700, marginBottom: 4 }}>Cost by Category</h2>
             <p style={{ fontSize: 13, color: 'var(--color-muted)', marginBottom: 16 }}>Monthly subscription spend</p>
             <ResponsiveContainer width="100%" height={280}>
@@ -208,7 +208,7 @@ export default function AnalyticsPage() {
           </motion.div>
 
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-            style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)', borderRadius: 16, padding: 24 }}>
+            className="glass-panel" style={{ borderRadius: 24, padding: 24 }}>
             <h2 style={{ fontFamily: 'Syne, sans-serif', fontSize: 16, fontWeight: 700, marginBottom: 4 }}>Top Subscriptions</h2>
             <p style={{ fontSize: 13, color: 'var(--color-muted)', marginBottom: 16 }}>Ranked by monthly cost</p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>

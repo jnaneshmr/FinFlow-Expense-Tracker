@@ -150,7 +150,7 @@ export default function TransactionsPage() {
           { label: 'Total Income',   value: fmt(totIncome),   color: 'var(--color-green)', bg: 'var(--color-green-bg)', Icon: TrendingUp },
           { label: 'Total Expenses', value: fmt(totExpenses), color: 'var(--color-red)',   bg: 'var(--color-red-bg)',   Icon: TrendingDown },
         ].map(s => (
-          <div key={s.label} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '12px 16px', background: 'var(--color-surface)', border: '1px solid var(--color-border)', borderRadius: 12 }}>
+          <div key={s.label} className="glass-panel" style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '16px 20px', borderRadius: 16 }}>
             <div style={{ width: 32, height: 32, borderRadius: 8, background: s.bg, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <s.Icon size={16} color={s.color} />
             </div>
@@ -185,7 +185,8 @@ export default function TransactionsPage() {
 
       {/* Table */}
       <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
-        style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)', borderRadius: 16, overflow: 'hidden' }}>
+        className="glass-panel"
+        style={{ borderRadius: 24, overflow: 'hidden' }}>
         {filtered.length === 0 ? (
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '48px 24px', gap: 12, textAlign: 'center' }}>
             <div style={{ width: 56, height: 56, borderRadius: 16, background: 'var(--color-surface2)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 24 }}>💳</div>

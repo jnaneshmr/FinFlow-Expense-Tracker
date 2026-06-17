@@ -1,7 +1,7 @@
 // src/pages/SettingsPage.jsx
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Save, Moon, Sun, User, Lock, Bell, LogOut } from 'lucide-react';
+import { Save, Moon, Sun, User, Lock, Bell, LogOut, Camera } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import { initials } from '../utils/helpers';
@@ -13,7 +13,8 @@ const labelSt = { fontSize: 12, fontWeight: 600, color: 'var(--color-muted)', te
 function Section({ title, children }) {
   return (
     <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
-      style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)', borderRadius: 16, padding: 24, marginBottom: 20 }}>
+      className="glass-panel"
+      style={{ borderRadius: 24, padding: 24, marginBottom: 24 }}>
       <h2 style={{ fontFamily: 'Syne, sans-serif', fontSize: 16, fontWeight: 700, marginBottom: 20, paddingBottom: 16, borderBottom: '1px solid var(--color-border)' }}>{title}</h2>
       {children}
     </motion.div>
@@ -21,13 +22,26 @@ function Section({ title, children }) {
 }
 
 export default function SettingsPage() {
-  const { user, logout } = useAuth();
+  const { user, logout, updateUser } = useAuth();
   const { theme, toggleTheme } = useTheme();
-  const [profile, setProfile] = useState({ name: user?.name || '', email: user?.email || '' });
+  const [profile, setProfile] = useState({ name: user?.name || '', email: user?.email || '', avatar: user?.avatar || '' });
   const [pw, setPw] = useState({ current: '', next: '', confirm: '' });
+
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      if (file.size > 2 * 1024 * 1024) { toast.error('Image must be less than 2MB'); return; }
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setProfile(p => ({ ...p, avatar: reader.result }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   const saveProfile = () => {
     if (!profile.name || !profile.email) { toast.error('Name and email are required'); return; }
+    updateUser({ ...user, name: profile.name, email: profile.email, avatar: profile.avatar });
     toast.success('Profile saved successfully!');
   };
 
@@ -50,14 +64,24 @@ export default function SettingsPage() {
 
       {/* Profile header */}
       <Section title="Profile">
-        <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 24, paddingBottom: 20, borderBottom: '1px solid var(--color-border)' }}>
-          <div style={{ width: 64, height: 64, borderRadius: '50%', background: 'linear-gradient(135deg, #6c63ff, #b57bee)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 22, fontWeight: 700, color: 'white', flexShrink: 0 }}>
-            {abbr}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 20, marginBottom: 24, paddingBottom: 20, borderBottom: '1px solid var(--color-border)' }}>
+          <div style={{ position: 'relative' }}>
+            {profile.avatar ? (
+              <img src={profile.avatar} alt="Profile" style={{ width: 72, height: 72, borderRadius: '50%', objectFit: 'cover', border: '2px solid rgba(255,255,255,0.1)' }} />
+            ) : (
+              <div style={{ width: 72, height: 72, borderRadius: '50%', background: 'linear-gradient(135deg, #6c63ff, #b57bee)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 24, fontWeight: 700, color: 'white', flexShrink: 0, border: '2px solid rgba(255,255,255,0.1)' }}>
+                {abbr}
+              </div>
+            )}
+            <label style={{ position: 'absolute', bottom: -4, right: -4, width: 28, height: 28, borderRadius: '50%', background: 'var(--color-surface2)', border: '1px solid var(--color-border)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: 'var(--color-text)', boxShadow: '0 2px 8px rgba(0,0,0,0.3)' }}>
+              <Camera size={14} />
+              <input type="file" accept="image/*" onChange={handleImageUpload} style={{ display: 'none' }} />
+            </label>
           </div>
           <div>
-            <div style={{ fontFamily: 'Syne, sans-serif', fontSize: 20, fontWeight: 700 }}>{user?.name}</div>
+            <div style={{ fontFamily: 'Syne, sans-serif', fontSize: 22, fontWeight: 700, letterSpacing: '-0.02em' }}>{user?.name}</div>
             <div style={{ fontSize: 14, color: 'var(--color-muted)' }}>{user?.email}</div>
-            <span style={{ display: 'inline-flex', marginTop: 6, padding: '2px 10px', borderRadius: 20, fontSize: 11, fontWeight: 600, background: 'var(--color-green-bg)', color: 'var(--color-green)' }}>✓ Pro Member</span>
+            <span style={{ display: 'inline-flex', marginTop: 8, padding: '3px 10px', borderRadius: 20, fontSize: 11, fontWeight: 600, background: 'var(--color-green-bg)', color: 'var(--color-green)' }}>✓ Pro Member</span>
           </div>
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
