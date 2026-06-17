@@ -1,10 +1,6 @@
 {
   "rewrites": [
     {
-      "source": "/api/(.*)",
-      "destination": "https://twenty-states-smash.loca.lt/api/$1"
-    },
-    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
