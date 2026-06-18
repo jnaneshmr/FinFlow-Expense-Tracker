@@ -15,7 +15,7 @@ function Section({ title, children }) {
     <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
       className="glass-panel"
       style={{ borderRadius: 24, padding: 24, marginBottom: 24 }}>
-      <h2 style={{ fontFamily: 'Syne, sans-serif', fontSize: 16, fontWeight: 700, marginBottom: 20, paddingBottom: 16, borderBottom: '1px solid var(--color-border)' }}>{title}</h2>
+      <h2 style={{ fontSize: 16, fontWeight: 700, marginBottom: 20, paddingBottom: 16, borderBottom: '1px solid var(--color-border)' }}>{title}</h2>
       {children}
     </motion.div>
   );
@@ -58,7 +58,7 @@ export default function SettingsPage() {
   return (
     <div style={{ maxWidth: 660 }}>
       <div style={{ marginBottom: 28 }}>
-        <h1 style={{ fontFamily: 'Syne, sans-serif', fontSize: 26, fontWeight: 800, color: 'var(--color-text)', marginBottom: 4 }}>Settings</h1>
+        <h1 style={{ fontSize: 26, fontWeight: 800, color: 'var(--color-text)', marginBottom: 4 }}>Settings</h1>
         <p style={{ fontSize: 14, color: 'var(--color-muted)' }}>Manage your account and preferences</p>
       </div>
 
@@ -79,7 +79,7 @@ export default function SettingsPage() {
             </label>
           </div>
           <div>
-            <div style={{ fontFamily: 'Syne, sans-serif', fontSize: 22, fontWeight: 700, letterSpacing: '-0.02em' }}>{user?.name}</div>
+            <div style={{ fontSize: 22, fontWeight: 700, letterSpacing: '-0.02em' }}>{user?.name}</div>
             <div style={{ fontSize: 14, color: 'var(--color-muted)' }}>{user?.email}</div>
             <span style={{ display: 'inline-flex', marginTop: 8, padding: '3px 10px', borderRadius: 20, fontSize: 11, fontWeight: 600, background: 'var(--color-green-bg)', color: 'var(--color-green)' }}>✓ Pro Member</span>
           </div>

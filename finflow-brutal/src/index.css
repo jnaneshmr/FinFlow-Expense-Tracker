@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-bg:         #FFDF00;
+  --color-surface:    #FFFFFF;
+  --color-surface2:   #EEEEEE;
+  --color-surface3:   #DDDDDD;
+  --color-border:     #000000;
+  --color-border2:    #000000;
+  --color-text:       #000000;
+  --color-muted:      #000000;
+  --color-hint:       #000000;
+  --color-accent:     #FF0000;  
+  --color-accent2:    #0000FF;
+  --color-accent-bg:  #000000; 
+  --color-green:      #000000;
+  --color-green-bg:   #00FF00;
+  --color-red:        #000000;
+  --color-red-bg:     #FF0000;
+  --color-amber:      #000000;
+  --color-amber-bg:   #FFDF00;
+  --color-blue:       #000000;
+  --color-blue-bg:    #0000FF;
+  --color-purple:     #000000;
+  --color-purple-bg:  #FF00FF;
+}
+
+body {
+  font-family: 'Space Mono', monospace;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-weight: 700;
+}
+
+img[alt="bg"], .ambient-glow { display: none !important; }
+
+.glass-panel, div, button {
+  border-radius: 0 !important;
+}
+
+.glass-panel {
+  background: var(--color-surface) !important;
+  border: 4px solid var(--color-border) !important;
+  box-shadow: 8px 8px 0px 0px rgba(0,0,0,1) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  transition: transform 0.1s, box-shadow 0.1s !important;
+}
+
+.glass-panel:hover {
+  transform: translate(-4px, -4px) !important;
+  box-shadow: 12px 12px 0px 0px rgba(0,0,0,1) !important;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(16px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+.animate-slide-up  { animation: slideUp  0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; }

@@ -1,0 +1,74 @@
+@import url('https://fonts.googleapis.com/css2?family=Bungee&family=Rubik:wght@900&display=swap');
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-bg:         #FF00FF;
+  --color-surface:    #00FFFF;
+  --color-surface2:   #FFFF00;
+  --color-surface3:   #00FF00;
+  --color-border:     #FF0000;
+  --color-border2:    #FF0000;
+  --color-text:       #000000;
+  --color-muted:      #000000;
+  --color-hint:       #000000;
+  --color-accent:     #00FF00;  
+  --color-accent2:    #0000FF;
+  --color-accent-bg:  #FF00FF; 
+  --color-green:      #00FF00;
+  --color-green-bg:   #000000;
+  --color-red:        #FF0000;
+  --color-red-bg:     #000000;
+  --color-amber:      #FFFF00;
+  --color-amber-bg:   #000000;
+  --color-blue:       #0000FF;
+  --color-blue-bg:    #000000;
+  --color-purple:     #FF00FF;
+  --color-purple-bg:  #000000;
+}
+
+body {
+  font-family: 'Rubik', sans-serif;
+  background: linear-gradient(45deg, #FF00FF, #00FFFF, #FFFF00, #00FF00);
+  background-size: 400% 400%;
+  animation: gradient 5s ease infinite;
+  color: var(--color-text);
+  font-weight: 900;
+}
+
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+img[alt="bg"], .ambient-glow { display: none !important; }
+
+.glass-panel {
+  background: var(--color-surface) !important;
+  border: 6px dashed #FF0000 !important;
+  box-shadow: 10px 10px 0px #0000FF !important;
+  border-radius: 30px !important;
+  transform: rotate(-1deg) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  transition: transform 0.2s !important;
+}
+
+.glass-panel:hover {
+  transform: scale(1.05) rotate(2deg) !important;
+  background: #FFFF00 !important;
+  box-shadow: -10px -10px 0px #FF00FF !important;
+}
+
+h1, h2 { 
+  font-family: 'Bungee', cursive !important; 
+  text-shadow: 4px 4px 0px #FFFFFF !important; 
+  color: #000000 !important; 
+}
+
+@keyframes slideUp {
+  from { transform: translateY(16px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+.animate-slide-up  { animation: slideUp  0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; }

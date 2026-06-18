@@ -1,6 +1,7 @@
 // src/pages/AnalyticsPage.jsx
 import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
+import { TrendingUp, TrendingDown, Target, LineChart as LineChartIcon } from 'lucide-react';
 import {
   AreaChart, Area, BarChart, Bar, LineChart, Line, PieChart, Pie, Cell,
   XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
@@ -60,25 +61,33 @@ export default function AnalyticsPage() {
   return (
     <div>
       <div style={{ marginBottom: 28 }}>
-        <h1 style={{ fontFamily: 'Syne, sans-serif', fontSize: 26, fontWeight: 800, color: 'var(--color-text)', marginBottom: 4 }}>Analytics</h1>
+        <h1 style={{ fontSize: 28, fontWeight: 700, color: 'var(--color-text)', marginBottom: 6, letterSpacing: '-0.02em' }}>Analytics</h1>
         <p style={{ fontSize: 14, color: 'var(--color-muted)' }}>Deep dive into your financial patterns and trends</p>
       </div>
 
       {/* KPI row */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 14, marginBottom: 28 }}>
         {[
-          { label: 'Avg Monthly Income',   value: fmt(avgIncome),   color: '#22d3a5', icon: '📈' },
-          { label: 'Avg Monthly Expenses', value: fmt(avgExpenses),  color: '#ff5f7e', icon: '📉' },
-          { label: 'Best Savings Month',   value: bestSavings.name,  color: '#6c63ff', icon: '🏆' },
-          { label: 'Avg Savings Rate',     value: `${savingsRate}%`, color: '#22d3a5', icon: '💹' },
-        ].map((k, i) => (
-          <motion.div key={k.label} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.08 }}
-            className="glass-panel" style={{ borderRadius: 16, padding: '16px 20px' }}>
-            <div style={{ fontSize: 20, marginBottom: 8 }}>{k.icon}</div>
-            <div style={{ fontSize: 11, color: 'var(--color-hint)', fontWeight: 600, marginBottom: 4 }}>{k.label}</div>
-            <div style={{ fontFamily: 'Syne, sans-serif', fontSize: 20, fontWeight: 700, color: k.color }}>{k.value}</div>
-          </motion.div>
-        ))}
+          { label: 'Avg Monthly Income',   value: fmt(avgIncome),   color: '#22d3a5', icon: TrendingUp },
+          { label: 'Avg Monthly Expenses', value: fmt(avgExpenses),  color: '#ff5f7e', icon: TrendingDown },
+          { label: 'Best Savings Month',   value: bestSavings.name,  color: '#6c63ff', icon: Target },
+          { label: 'Avg Savings Rate',     value: `${savingsRate}%`, color: '#22d3a5', icon: LineChartIcon },
+        ].map((s, i) => {
+          const IconComponent = s.icon;
+          return (
+            <motion.div key={s.label} className="glass-panel" 
+              initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.08 }}
+              style={{ borderRadius: 24, padding: 24, display: 'flex', flexDirection: 'column' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 16 }}>
+                <div style={{ width: 48, height: 48, borderRadius: 12, background: 'var(--color-surface2)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: s.color, border: '1px solid var(--color-border)' }}>
+                  <IconComponent size={24} strokeWidth={1.5} />
+                </div>
+                <div style={{ fontSize: 14, fontWeight: 500, color: 'var(--color-muted)', letterSpacing: '0.01em' }}>{s.label}</div>
+              </div>
+              <div style={{ fontSize: 32, fontWeight: 700, color: 'var(--color-text)', letterSpacing: '-0.02em' }}>{s.value}</div>
+            </motion.div>
+          )
+        })}
       </div>
 
       {/* Tabs */}
@@ -91,7 +100,7 @@ export default function AnalyticsPage() {
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
             className="glass-panel" style={{ gridColumn: '1 / -1', borderRadius: 24, padding: 24 }}>
-            <h2 style={{ fontFamily: 'Syne, sans-serif', fontSize: 16, fontWeight: 700, marginBottom: 4 }}>Monthly Cash Flow</h2>
+            <h2 style={{ fontSize: 16, fontWeight: 700, marginBottom: 4 }}>Monthly Cash Flow</h2>
             <p style={{ fontSize: 13, color: 'var(--color-muted)', marginBottom: 20 }}>Income vs expenses over 7 months</p>
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={MONTHLY} barGap={4}>
@@ -108,7 +117,7 @@ export default function AnalyticsPage() {
 
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
             className="glass-panel" style={{ borderRadius: 24, padding: 24 }}>
-            <h2 style={{ fontFamily: 'Syne, sans-serif', fontSize: 16, fontWeight: 700, marginBottom: 4 }}>Monthly Savings</h2>
+            <h2 style={{ fontSize: 16, fontWeight: 700, marginBottom: 4 }}>Monthly Savings</h2>
             <p style={{ fontSize: 13, color: 'var(--color-muted)', marginBottom: 20 }}>How much saved each month</p>
             <ResponsiveContainer width="100%" height={220}>
               <AreaChart data={MONTHLY}>
@@ -129,7 +138,7 @@ export default function AnalyticsPage() {
 
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}
             className="glass-panel" style={{ borderRadius: 24, padding: 24 }}>
-            <h2 style={{ fontFamily: 'Syne, sans-serif', fontSize: 16, fontWeight: 700, marginBottom: 4 }}>Income Trend</h2>
+            <h2 style={{ fontSize: 16, fontWeight: 700, marginBottom: 4 }}>Income Trend</h2>
             <p style={{ fontSize: 13, color: 'var(--color-muted)', marginBottom: 20 }}>Monthly income growth</p>
             <ResponsiveContainer width="100%" height={220}>
               <LineChart data={MONTHLY}>
@@ -149,7 +158,7 @@ export default function AnalyticsPage() {
         <div style={{ display: 'grid', gridTemplateColumns: '3fr 2fr', gap: 20 }}>
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
             className="glass-panel" style={{ borderRadius: 24, padding: 24 }}>
-            <h2 style={{ fontFamily: 'Syne, sans-serif', fontSize: 16, fontWeight: 700, marginBottom: 4 }}>Expenses by Category</h2>
+            <h2 style={{ fontSize: 16, fontWeight: 700, marginBottom: 4 }}>Expenses by Category</h2>
             <p style={{ fontSize: 13, color: 'var(--color-muted)', marginBottom: 20 }}>All-time totals</p>
             <ResponsiveContainer width="100%" height={360}>
               <BarChart data={CAT_DATA} layout="vertical">
@@ -166,7 +175,7 @@ export default function AnalyticsPage() {
 
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
             className="glass-panel" style={{ borderRadius: 24, padding: 24 }}>
-            <h2 style={{ fontFamily: 'Syne, sans-serif', fontSize: 16, fontWeight: 700, marginBottom: 4 }}>Distribution</h2>
+            <h2 style={{ fontSize: 16, fontWeight: 700, marginBottom: 4 }}>Distribution</h2>
             <p style={{ fontSize: 13, color: 'var(--color-muted)', marginBottom: 16 }}>Share of total spending</p>
             <ResponsiveContainer width="100%" height={220}>
               <PieChart>
@@ -194,7 +203,7 @@ export default function AnalyticsPage() {
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
             className="glass-panel" style={{ borderRadius: 24, padding: 24 }}>
-            <h2 style={{ fontFamily: 'Syne, sans-serif', fontSize: 16, fontWeight: 700, marginBottom: 4 }}>Cost by Category</h2>
+            <h2 style={{ fontSize: 16, fontWeight: 700, marginBottom: 4 }}>Cost by Category</h2>
             <p style={{ fontSize: 13, color: 'var(--color-muted)', marginBottom: 16 }}>Monthly subscription spend</p>
             <ResponsiveContainer width="100%" height={280}>
               <PieChart>
@@ -209,7 +218,7 @@ export default function AnalyticsPage() {
 
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
             className="glass-panel" style={{ borderRadius: 24, padding: 24 }}>
-            <h2 style={{ fontFamily: 'Syne, sans-serif', fontSize: 16, fontWeight: 700, marginBottom: 4 }}>Top Subscriptions</h2>
+            <h2 style={{ fontSize: 16, fontWeight: 700, marginBottom: 4 }}>Top Subscriptions</h2>
             <p style={{ fontSize: 13, color: 'var(--color-muted)', marginBottom: 16 }}>Ranked by monthly cost</p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
               {[...subs].sort((a, b) => toMo(b) - toMo(a)).map((s, i) => (

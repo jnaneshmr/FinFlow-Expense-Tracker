@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-bg:         #ffffff;
+  --color-surface:    #ffffff;
+  --color-surface2:   #f9f9f9;
+  --color-surface3:   #f0f0f0;
+  --color-border:     #e5e5e5;
+  --color-border2:    #d4d4d4;
+  --color-text:       #000000;
+  --color-muted:      #666666;
+  --color-hint:       #999999;
+  --color-accent:     #000000;  
+  --color-accent2:    #333333;
+  --color-accent-bg:  #f0f0f0; 
+  --color-green:      #000000;
+  --color-green-bg:   #f0f0f0;
+  --color-red:        #000000;
+  --color-red-bg:     #f0f0f0;
+  --color-amber:      #000000;
+  --color-amber-bg:   #f0f0f0;
+  --color-blue:       #000000;
+  --color-blue-bg:    #f0f0f0;
+  --color-purple:     #000000;
+  --color-purple-bg:  #f0f0f0;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text);
+  letter-spacing: -0.02em;
+}
+
+img[alt="bg"], .ambient-glow { display: none !important; }
+
+.glass-panel {
+  background: var(--color-surface) !important;
+  border: 1px solid var(--color-border) !important;
+  box-shadow: none !important;
+  border-radius: 0px !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.glass-panel:hover {
+  border-color: var(--color-text) !important;
+}
+
+/* Animations */
+@keyframes slideUp {
+  from { transform: translateY(16px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+.animate-slide-up  { animation: slideUp  0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; }

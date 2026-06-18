@@ -131,7 +131,7 @@ export default function TransactionsPage() {
     <div>
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 28, flexWrap: 'wrap', gap: 12 }}>
         <div>
-          <h1 style={{ fontFamily: 'Syne, sans-serif', fontSize: 26, fontWeight: 800, color: 'var(--color-text)', marginBottom: 4 }}>Transactions</h1>
+          <h1 style={{ fontSize: 28, fontWeight: 700, color: 'var(--color-text)', marginBottom: 6, letterSpacing: '-0.02em' }}>Transactions</h1>
           <p style={{ fontSize: 14, color: 'var(--color-muted)' }}>{filtered.length} transactions · Net: <strong style={{ color: (totIncome - totExpenses) >= 0 ? 'var(--color-green)' : 'var(--color-red)' }}>{fmt(totIncome - totExpenses)}</strong></p>
         </div>
         <div style={{ display: 'flex', gap: 8 }}>
@@ -147,19 +147,24 @@ export default function TransactionsPage() {
       {/* Summary pills */}
       <div style={{ display: 'flex', gap: 12, marginBottom: 20, flexWrap: 'wrap' }}>
         {[
-          { label: 'Total Income',   value: fmt(totIncome),   color: 'var(--color-green)', bg: 'var(--color-green-bg)', Icon: TrendingUp },
-          { label: 'Total Expenses', value: fmt(totExpenses), color: 'var(--color-red)',   bg: 'var(--color-red-bg)',   Icon: TrendingDown },
-        ].map(s => (
-          <div key={s.label} className="glass-panel" style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '16px 20px', borderRadius: 16 }}>
-            <div style={{ width: 32, height: 32, borderRadius: 8, background: s.bg, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <s.Icon size={16} color={s.color} />
-            </div>
-            <div>
-              <div style={{ fontSize: 11, color: 'var(--color-hint)', fontWeight: 600 }}>{s.label}</div>
-              <div style={{ fontSize: 16, fontWeight: 700, color: s.color, fontFamily: 'Syne, sans-serif' }}>{s.value}</div>
-            </div>
-          </div>
-        ))}
+          { label: 'Total Income',   value: fmt(totIncome),   color: 'var(--color-green)', Icon: TrendingUp },
+          { label: 'Total Expenses', value: fmt(totExpenses), color: 'var(--color-red)',   Icon: TrendingDown },
+        ].map(s => {
+          const IconComponent = s.Icon;
+          return (
+            <motion.div key={s.label} className="glass-panel" 
+              initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
+              style={{ borderRadius: 24, padding: 24, display: 'flex', flexDirection: 'column' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 16 }}>
+                <div style={{ width: 48, height: 48, borderRadius: 12, background: 'var(--color-surface2)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: s.color, border: '1px solid var(--color-border)' }}>
+                  <IconComponent size={24} strokeWidth={1.5} />
+                </div>
+                <div style={{ fontSize: 14, fontWeight: 500, color: 'var(--color-muted)', letterSpacing: '0.01em' }}>{s.label}</div>
+              </div>
+              <div style={{ fontSize: 32, fontWeight: 700, color: 'var(--color-text)', letterSpacing: '-0.02em' }}>{s.value}</div>
+            </motion.div>
+          )
+        })}
       </div>
 
       {/* Filters */}

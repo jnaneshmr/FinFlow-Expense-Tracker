@@ -1,7 +1,7 @@
 // src/pages/SubscriptionsPage.jsx
 import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { Plus, Download, Edit2, Trash2, RefreshCw } from 'lucide-react';
+import { Plus, Download, Edit2, Trash2, RefreshCw, Wallet, Calendar, CheckCircle, PauseCircle } from 'lucide-react';
 import { Modal } from '../components/ui';
 import { fmt, fmtDate, daysUntil, CAT_ICONS, exportToCSV } from '../utils/helpers';
 import toast from 'react-hot-toast';
@@ -141,7 +141,7 @@ export default function SubscriptionsPage() {
     <div>
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 28, flexWrap: 'wrap', gap: 12 }}>
         <div>
-          <h1 style={{ fontFamily: 'Syne, sans-serif', fontSize: 26, fontWeight: 800, color: 'var(--color-text)', marginBottom: 4 }}>Subscriptions</h1>
+          <h1 style={{ fontSize: 28, fontWeight: 700, color: 'var(--color-text)', marginBottom: 6, letterSpacing: '-0.02em' }}>Subscriptions</h1>
           <p style={{ fontSize: 14, color: 'var(--color-muted)' }}>
             Monthly total: <strong style={{ color: 'var(--color-accent2)' }}>{fmt(totalMonthly)}</strong> · {activeSubs.length} active services
           </p>
@@ -160,17 +160,26 @@ export default function SubscriptionsPage() {
       {/* Stats */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: 14, marginBottom: 20 }}>
         {[
-          { label: 'Monthly Cost',   value: fmt(totalMonthly),                 color: '#6c63ff', icon: '💰' },
-          { label: 'Annual Cost',    value: fmt(totalMonthly * 12),             color: '#f5a623', icon: '📅' },
-          { label: 'Active',         value: activeSubs.length,                  color: '#22d3a5', icon: '✅' },
-          { label: 'Paused',         value: subs.filter(s=>s.status==='paused').length, color: '#f5a623', icon: '⏸️' },
-        ].map(s => (
-          <div key={s.label} className="glass-panel" style={{ borderRadius: 16, padding: '16px 20px' }}>
-            <div style={{ fontSize: 18, marginBottom: 6 }}>{s.icon}</div>
-            <div style={{ fontSize: 11, color: 'var(--color-hint)', fontWeight: 600, marginBottom: 4 }}>{s.label}</div>
-            <div style={{ fontFamily: 'Syne, sans-serif', fontSize: 20, fontWeight: 700, color: s.color }}>{s.value}</div>
-          </div>
-        ))}
+          { label: 'Monthly Cost',   value: fmt(totalMonthly),                 color: '#6c63ff', icon: Wallet },
+          { label: 'Annual Cost',    value: fmt(totalMonthly * 12),             color: '#f5a623', icon: Calendar },
+          { label: 'Active',         value: activeSubs.length,                  color: '#22d3a5', icon: CheckCircle },
+          { label: 'Paused',         value: subs.filter(s=>s.status==='paused').length, color: '#f5a623', icon: PauseCircle },
+        ].map(s => {
+          const IconComponent = s.icon;
+          return (
+            <motion.div key={s.label} className="glass-panel" 
+              initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
+              style={{ borderRadius: 24, padding: 24, display: 'flex', flexDirection: 'column' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 16 }}>
+                <div style={{ width: 48, height: 48, borderRadius: 12, background: 'var(--color-surface2)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: s.color, border: '1px solid var(--color-border)' }}>
+                  <IconComponent size={24} strokeWidth={1.5} />
+                </div>
+                <div style={{ fontSize: 14, fontWeight: 500, color: 'var(--color-muted)', letterSpacing: '0.01em' }}>{s.label}</div>
+              </div>
+              <div style={{ fontSize: 32, fontWeight: 700, color: 'var(--color-text)', letterSpacing: '-0.02em' }}>{s.value}</div>
+            </motion.div>
+          )
+        })}
       </div>
 
       {/* Filters */}

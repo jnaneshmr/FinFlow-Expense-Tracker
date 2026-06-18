@@ -1,7 +1,7 @@
 // src/pages/BudgetsPage.jsx
 import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { Plus, Edit2, Trash2, AlertTriangle } from 'lucide-react';
+import { Plus, Edit2, Trash2, AlertTriangle, Target, CreditCard, CheckCircle } from 'lucide-react';
 import { Modal } from '../components/ui';
 import { fmt, CAT_ICONS } from '../utils/helpers';
 import toast from 'react-hot-toast';
@@ -93,7 +93,7 @@ export default function BudgetsPage() {
     <div>
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 28, flexWrap: 'wrap', gap: 12 }}>
         <div>
-          <h1 style={{ fontFamily: 'Syne, sans-serif', fontSize: 26, fontWeight: 800, color: 'var(--color-text)', marginBottom: 4 }}>Budgets</h1>
+          <h1 style={{ fontSize: 28, fontWeight: 700, color: 'var(--color-text)', marginBottom: 6, letterSpacing: '-0.02em' }}>Budgets</h1>
           <p style={{ fontSize: 14, color: 'var(--color-muted)' }}>Track spending against your monthly targets</p>
         </div>
         <button onClick={() => setShowAdd(true)} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '9px 16px', background: '#6c63ff', border: 'none', borderRadius: 10, fontSize: 14, fontWeight: 600, cursor: 'pointer', color: 'white', fontFamily: 'DM Sans, sans-serif' }}>
@@ -104,17 +104,26 @@ export default function BudgetsPage() {
       {/* Summary */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 14, marginBottom: 24 }}>
         {[
-          { label: 'Total Budgeted', value: fmt(totalBudgeted), color: '#6c63ff', icon: '🎯' },
-          { label: 'Total Spent',    value: fmt(totalSpent),    color: totalSpent > totalBudgeted ? 'var(--color-red)' : 'var(--color-green)', icon: '💳' },
-          { label: 'Remaining',      value: fmt(totalBudgeted - totalSpent), color: 'var(--color-green)', icon: '💚' },
-          { label: 'Over Budget',    value: `${overCount} categories`, color: overCount > 0 ? 'var(--color-red)' : 'var(--color-green)', icon: overCount > 0 ? '⚠️' : '✅' },
-        ].map(s => (
-          <div key={s.label} className="glass-panel" style={{ borderRadius: 16, padding: '16px 20px' }}>
-            <div style={{ fontSize: 18, marginBottom: 6 }}>{s.icon}</div>
-            <div style={{ fontSize: 11, color: 'var(--color-hint)', fontWeight: 600, marginBottom: 4 }}>{s.label}</div>
-            <div style={{ fontFamily: 'Syne, sans-serif', fontSize: 18, fontWeight: 700, color: s.color }}>{s.value}</div>
-          </div>
-        ))}
+          { label: 'Total Budgeted', value: fmt(totalBudgeted), color: '#6c63ff', icon: Target },
+          { label: 'Total Spent',    value: fmt(totalSpent),    color: totalSpent > totalBudgeted ? 'var(--color-red)' : 'var(--color-green)', icon: CreditCard },
+          { label: 'Remaining',      value: fmt(totalBudgeted - totalSpent), color: 'var(--color-green)', icon: CheckCircle },
+          { label: 'Over Budget',    value: `${overCount} categories`, color: overCount > 0 ? 'var(--color-red)' : 'var(--color-green)', icon: overCount > 0 ? AlertTriangle : CheckCircle },
+        ].map(s => {
+          const IconComponent = s.icon;
+          return (
+            <motion.div key={s.label} className="glass-panel" 
+              initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
+              style={{ borderRadius: 24, padding: 24, display: 'flex', flexDirection: 'column' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 16 }}>
+                <div style={{ width: 48, height: 48, borderRadius: 12, background: 'var(--color-surface2)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: s.color, border: '1px solid var(--color-border)' }}>
+                  <IconComponent size={24} strokeWidth={1.5} />
+                </div>
+                <div style={{ fontSize: 14, fontWeight: 500, color: 'var(--color-muted)', letterSpacing: '0.01em' }}>{s.label}</div>
+              </div>
+              <div style={{ fontSize: 32, fontWeight: 700, color: 'var(--color-text)', letterSpacing: '-0.02em' }}>{s.value}</div>
+            </motion.div>
+          )
+        })}
       </div>
 
       {/* Alert banner */}

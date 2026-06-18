@@ -43,7 +43,7 @@ export function MetricCard({ label, value, trend, trendUp, trendLabel, icon, acc
         {icon}
       </div>
       <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--color-muted)', marginBottom: 6, letterSpacing: '0.02em' }}>{label}</div>
-      <div style={{ fontFamily: 'Syne, sans-serif', fontSize: 26, fontWeight: 700, color: 'var(--color-text)', marginBottom: 8 }}>{value}</div>
+      <div style={{ fontSize: 26, fontWeight: 700, color: 'var(--color-text)', marginBottom: 8 }}>{value}</div>
       {trend && (
         <span style={{
           display: 'inline-flex', alignItems: 'center', gap: 4,
@@ -125,7 +125,7 @@ export function Modal({ title, onClose, children, maxWidth = 520 }) {
           style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border2)', borderRadius: 20, padding: 28, width: '100%', maxWidth, maxHeight: '90vh', overflowY: 'auto' }}
         >
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 24 }}>
-            <h2 style={{ fontFamily: 'Syne, sans-serif', fontSize: 20, fontWeight: 700, color: 'var(--color-text)', margin: 0 }}>{title}</h2>
+            <h2 style={{ fontSize: 20, fontWeight: 700, color: 'var(--color-text)', margin: 0 }}>{title}</h2>
             <button onClick={onClose} style={{ width: 32, height: 32, borderRadius: 8, background: 'var(--color-surface2)', border: 'none', cursor: 'pointer', color: 'var(--color-muted)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <X size={16} />
             </button>

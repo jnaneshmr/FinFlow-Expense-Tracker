@@ -7,10 +7,10 @@ export default function NotFoundPage() {
   return (
     <div style={{ minHeight: '100vh', background: 'var(--color-bg)', display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: 24 }}>
       <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-        <div style={{ fontFamily: 'Syne, sans-serif', fontSize: 'clamp(80px, 15vw, 160px)', fontWeight: 800, lineHeight: 1, background: 'linear-gradient(135deg, #6c63ff, #b57bee)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', marginBottom: 16 }}>
+        <div style={{ fontSize: 'clamp(80px, 15vw, 160px)', fontWeight: 800, lineHeight: 1, background: 'linear-gradient(135deg, #6c63ff, #b57bee)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', marginBottom: 16 }}>
           404
         </div>
-        <h1 style={{ fontFamily: 'Syne, sans-serif', fontSize: 28, fontWeight: 800, color: 'var(--color-text)', marginBottom: 10 }}>
+        <h1 style={{ fontSize: 28, fontWeight: 800, color: 'var(--color-text)', marginBottom: 10 }}>
           Page not found
         </h1>
         <p style={{ fontSize: 16, color: 'var(--color-muted)', maxWidth: 380, margin: '0 auto 36px', lineHeight: 1.6 }}>
