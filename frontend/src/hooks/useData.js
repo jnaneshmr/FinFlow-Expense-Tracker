@@ -3,7 +3,47 @@ import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { transactionService, subscriptionService, budgetService, dashboardService } from '../services/api';
 import toast from 'react-hot-toast';
 
-// ── Transactions ──────────────────────────────────────
+// Helper to generate optimistic update configuration
+function getOptimisticConfig(qc, key, operation, successMsg) {
+  return {
+    onMutate: async (data) => {
+      await qc.cancelQueries(key);
+      const previous = qc.getQueriesData(key);
+      
+      qc.setQueriesData(key, (oldData) => {
+        if (!oldData) return oldData;
+        if (operation === 'create') {
+          return [{ id: Date.now(), ...data }, ...oldData];
+        }
+        if (operation === 'update') {
+          return oldData.map(item => item.id === data.id ? { ...item, ...data } : item);
+        }
+        if (operation === 'remove') {
+          return oldData.filter(item => item.id !== data);
+        }
+        return oldData;
+      });
+      return { previous };
+    },
+    onError: (err, data, context) => {
+      if (context?.previous) {
+        context.previous.forEach(([queryKey, oldData]) => {
+          qc.setQueryData(queryKey, oldData);
+        });
+      }
+      toast.error('Failed to save changes');
+    },
+    onSettled: () => {
+      qc.invalidateQueries(key);
+      qc.invalidateQueries('dashboard');
+    },
+    onSuccess: () => {
+      if (successMsg) toast.success(successMsg);
+    }
+  };
+}
+
+// 🔵 Transactions 🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵
 export function useTransactions(params = {}) {
   return useQuery(
     ['transactions', params],
@@ -14,24 +54,23 @@ export function useTransactions(params = {}) {
 
 export function useTransactionMutations() {
   const qc = useQueryClient();
-  const invalidate = () => { qc.invalidateQueries('transactions'); qc.invalidateQueries('dashboard'); };
 
   const create = useMutation(
     (data) => transactionService.create(data),
-    { onSuccess: () => { toast.success('Transaction added'); invalidate(); } }
+    getOptimisticConfig(qc, 'transactions', 'create', 'Transaction added')
   );
   const update = useMutation(
     ({ id, ...data }) => transactionService.update(id, data),
-    { onSuccess: () => { toast.success('Transaction updated'); invalidate(); } }
+    getOptimisticConfig(qc, 'transactions', 'update', 'Transaction updated')
   );
   const remove = useMutation(
     (id) => transactionService.delete(id),
-    { onSuccess: () => { toast.success('Transaction deleted'); invalidate(); } }
+    getOptimisticConfig(qc, 'transactions', 'remove', 'Transaction deleted')
   );
   return { create, update, remove };
 }
 
-// ── Subscriptions ─────────────────────────────────────
+// 🔵 Subscriptions 🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵
 export function useSubscriptions(params = {}) {
   return useQuery(
     ['subscriptions', params],
@@ -42,24 +81,23 @@ export function useSubscriptions(params = {}) {
 
 export function useSubscriptionMutations() {
   const qc = useQueryClient();
-  const invalidate = () => { qc.invalidateQueries('subscriptions'); qc.invalidateQueries('dashboard'); };
 
   const create = useMutation(
     (data) => subscriptionService.create(data),
-    { onSuccess: () => { toast.success('Subscription added'); invalidate(); } }
+    getOptimisticConfig(qc, 'subscriptions', 'create', 'Subscription added')
   );
   const update = useMutation(
     ({ id, ...data }) => subscriptionService.update(id, data),
-    { onSuccess: () => { toast.success('Subscription updated'); invalidate(); } }
+    getOptimisticConfig(qc, 'subscriptions', 'update', 'Subscription updated')
   );
   const remove = useMutation(
     (id) => subscriptionService.delete(id),
-    { onSuccess: () => { toast.success('Subscription deleted'); invalidate(); } }
+    getOptimisticConfig(qc, 'subscriptions', 'remove', 'Subscription deleted')
   );
   return { create, update, remove };
 }
 
-// ── Budgets ───────────────────────────────────────────
+// 🔵 Budgets 🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵
 export function useBudgets(params = {}) {
   return useQuery(
     ['budgets', params],
@@ -70,24 +108,23 @@ export function useBudgets(params = {}) {
 
 export function useBudgetMutations() {
   const qc = useQueryClient();
-  const invalidate = () => { qc.invalidateQueries('budgets'); };
 
   const create = useMutation(
     (data) => budgetService.create(data),
-    { onSuccess: () => { toast.success('Budget created'); invalidate(); } }
+    getOptimisticConfig(qc, 'budgets', 'create', 'Budget created')
   );
   const update = useMutation(
     ({ id, ...data }) => budgetService.update(id, data),
-    { onSuccess: () => { toast.success('Budget updated'); invalidate(); } }
+    getOptimisticConfig(qc, 'budgets', 'update', 'Budget updated')
   );
   const remove = useMutation(
     (id) => budgetService.delete(id),
-    { onSuccess: () => { toast.success('Budget deleted'); invalidate(); } }
+    getOptimisticConfig(qc, 'budgets', 'remove', 'Budget deleted')
   );
   return { create, update, remove };
 }
 
-// ── Dashboard ─────────────────────────────────────────
+// 🔵 Dashboard 🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵
 export function useDashboard() {
   return useQuery(
     'dashboard',
